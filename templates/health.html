@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Health Record</h2>
+<form method="post">
+    <div class="mb-3">
+        <label for="student_id" class="form-label">Student</label>
+        <select class="form-control" name="student_id" required>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="weight" class="form-label">Weight (kg)</label>
+        <input type="number" step="0.1" class="form-control" name="weight" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="height" class="form-label">Height (cm)</label>
+        <input type="number" step="0.1" class="form-control" name="height" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" name="date" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<hr>
+<h3>Existing Health Records</h3>
+<table class="table table-striped">
+    <tr>
+        <th>Student</th>
+        <th>Weight (kg)</th>
+        <th>Height (cm)</th>
+        <th>Date</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td>{{ record.student.name }}</td>
+        <td>{{ record.weight }}</td>
+        <td>{{ record.height }}</td>
+        <td>{{ record.date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

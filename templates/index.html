@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm p-3">
+            <h4>{{ meals }}</h4>
+            <p class="text-muted">Total Meals</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm p-3">
+            <h4>{{ students }}</h4>
+            <p class="text-muted">Total Students</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm p-3">
+            <h4>{{ lessons }}</h4>
+            <p class="text-muted">Total Lessons</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h3>Meals Served Per Day</h3>
+<canvas id="mealsChart" width="400" height="200"></canvas>
+
+<hr class="my-4">
+<h3>Average Student Weight Over Time</h3>
+<canvas id="healthChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Meals chart
+    new Chart(document.getElementById('mealsChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ meal_labels | safe }},
+    datasets: [{
+        label: 'Students Fed',
+        data: {{ meal_values | safe }},
+    borderWidth: 1,
+        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+    }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+    });
+
+    // Health chart
+    new Chart(document.getElementById('healthChart'), {
+        type: 'line',
+        data: {
+            labels: {{ health_labels | safe }},
+    datasets: [{
+        label: 'Average Weight (kg)',
+        data: {{ health_values | safe }},
+    fill: false,
+        borderColor: 'rgba(255, 99, 132, 0.8)',
+        tension: 0.2
+    }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+    });
+</script>
+{% endblock %}
